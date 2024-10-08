@@ -1,3 +1,3 @@
-# Clone TabNews
+# BookNest
 
-Keeping track of my progress in Filipe Deschamps' course.dev
+Um projeto de plataforma comunitária para leitores compartilharem e descobrirem livros.
