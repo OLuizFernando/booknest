@@ -4,13 +4,14 @@
   "description": "Keeping track of my progress in Filipe Deschamps' course.dev",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run services:up && next dev",
+    "services:up": "docker compose -f infra/compose.yaml up -d",
+    "services:stop": "docker compose -f infra/compose.yaml stop",
+    "services:down": "docker compose -f infra/compose.yaml down",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest",
-    "test:watch": "jest --watchAll",
-    "db:up": "docker compose -f infra/compose.yaml up -d",
-    "db:down": "docker compose -f infra/compose.yaml down"
+    "test:watch": "jest --watchAll"
   },
   "author": "",
   "license": "MIT",
