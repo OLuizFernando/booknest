@@ -11,9 +11,7 @@ export default function StatusPage() {
     <>
       <h1>Status</h1>
       <UpdatedAt />
-      <MaxConnections />
-      <OpenedConnections />
-      <PostgresVersion />
+      <DatabaseStatus />
     </>
   );
 }
@@ -32,44 +30,31 @@ function UpdatedAt() {
   return <div>Última atualização: {UpdatedAtText}</div>;
 }
 
-function MaxConnections() {
+function DatabaseStatus() {
   const { isLoading, data } = useSWR("/api/v1/status", fetchAPI, {
     refreshInterval: 2000,
   });
 
-  let MaxConnectionsText = "Carregando...";
+  let DatabaseStatusText = "Carregando...";
 
   if (!isLoading && data) {
-    MaxConnectionsText = data.dependencies.database.max_connections;
+    DatabaseStatusText = (
+      <>
+        <div>Versão: {data.dependencies.database.version}</div>
+        <div>
+          Conexões abertas: {data.dependencies.database.opened_connections}
+        </div>
+        <div>
+          Conexões máximas: {data.dependencies.database.max_connections}
+        </div>
+      </>
+    );
   }
 
-  return <div>Conexões máximas do banco de dados: {MaxConnectionsText}</div>;
-}
-
-function OpenedConnections() {
-  const { isLoading, data } = useSWR("/api/v1/status", fetchAPI, {
-    refreshInterval: 2000,
-  });
-
-  let OpenedConnectionsText = "Carregando...";
-
-  if (!isLoading && data) {
-    OpenedConnectionsText = data.dependencies.database.opened_connections;
-  }
-
-  return <div>Conexões abertas no banco de dados: {OpenedConnectionsText}</div>;
-}
-
-function PostgresVersion() {
-  const { isLoading, data } = useSWR("/api/v1/status", fetchAPI, {
-    refreshInterval: 2000,
-  });
-
-  let PostgresVersionText = "Carregando...";
-
-  if (!isLoading && data) {
-    PostgresVersionText = data.dependencies.database.version;
-  }
-
-  return <div>Versão do banco de dados: {PostgresVersionText}</div>;
+  return (
+    <>
+      <h2>Database</h2>
+      <div>{DatabaseStatusText}</div>
+    </>
+  );
 }
