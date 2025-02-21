@@ -1,5 +1,5 @@
 import { createRouter } from "next-connect";
-import controller from "infra/controller.js";
+import controller from "/infra/controller.js";
 import migrator from "/models/migrator.js";
 
 const router = createRouter();
