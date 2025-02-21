@@ -29,7 +29,7 @@ async function getHandler(request, response) {
       ...defaultMigrationOptions,
       dbClient: dbClient,
     });
-    response.status(200).json(pendingMigrations);
+    return response.status(200).json(pendingMigrations);
   } finally {
     await dbClient.end();
   }
@@ -48,10 +48,10 @@ async function postHandler(request, response) {
     });
 
     if (migratedMigrations.length > 0) {
-      response.status(201).json(migratedMigrations);
+      return response.status(201).json(migratedMigrations);
     }
 
-    response.status(200).json(migratedMigrations);
+    return response.status(200).json(migratedMigrations);
   } finally {
     await dbClient.end();
   }
